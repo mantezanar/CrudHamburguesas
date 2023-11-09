@@ -21,7 +21,6 @@ app.use(myConnection(mysql, {
     port: 3306,
     database: 'crudnode'
 }, 'single'));
-
 app.use(express.urlencoded({extended: false}))
 
 //rutas

@@ -53,4 +53,10 @@ controller.delete = (req, res) => {
     });
 };
 
+controller.userLogin = (req, res) => {
+    res.render('userLogin');
+};
+controller.userReg = (req, res) => {
+    res.render('userReg');c
+};
 module.exports = controller;

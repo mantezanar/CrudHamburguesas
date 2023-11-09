@@ -8,7 +8,7 @@ router.post('/add', productosCrontroller.save);
 router.get('/update/:id', productosCrontroller.update);
 router.post('/update/:id', productosCrontroller.save_update);
 router.get('/delete/:id', productosCrontroller.delete);
-
-
+router.get('/iniciosesion', productosCrontroller.userLogin);
+router.get('/registro', productosCrontroller.userReg);
 
 module.exports = router;
