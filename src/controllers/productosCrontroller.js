@@ -15,6 +15,8 @@ controller.list = (req, res) =>{
 
 controller.save = (req, res) => {
     const data = req.body;
+    console.log(data);
+    
     req.getConnection((err, conn) => {
         conn.query('INSERT INTO productos set ?', [data], (err, rows) =>{
             console.log(rows);
@@ -22,6 +24,9 @@ controller.save = (req, res) => {
         });
     });
 };
+
+
+
 
 controller.update = (req,res) => {
     const { id } = req.params;
@@ -53,10 +58,25 @@ controller.delete = (req, res) => {
     });
 };
 
+
+controller.listInicio = (req, res) => {
+    req.getConnection((err, conn) => {
+        conn.query('SELECT * FROM productos', (err, productos) => {
+            if (err) {
+                res.json(err);
+            }
+            res.render('inicio', {
+                data: productos
+            });
+        });
+    });
+};
+
 controller.userLogin = (req, res) => {
     res.render('userLogin');
 };
 controller.userReg = (req, res) => {
-    res.render('userReg');c
+    res.render('userReg');
 };
+
 module.exports = controller;

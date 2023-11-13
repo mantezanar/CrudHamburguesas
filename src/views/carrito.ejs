@@ -1,0 +1,72 @@
+<%- include('partials/_header') %>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <script src="https://sdk.mercadopago.com/js/v2"></script>
+</head>
+<body>
+  <div class="mx-auto my-4 max-w-3xl p-6 space-y-4 sm:p-10 dark:bg-gray-900 dark:text-gray-100">
+    <h2 class="text-xl font-semibold">Carrito</h2>
+    <ul class="flex flex-col divide-y divide-gray-700">
+      <% let totalPrice = 0; %>
+      <% data.forEach(product => { %>
+      <li class="flex flex-col py-6 sm:flex-row sm:justify-between">
+        <div class="flex w-full space-x-2 sm:space-x-4">
+          <img class="flex-shrink-0 object-cover w-20 h-20 dark:border-transparent rounded outline-none sm:w-32 sm:h-32 dark:bg-gray-500" src="https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg" alt="Polaroid camera">
+          <div class="flex flex-col justify-between w-full pb-4">
+            <div class="flex justify-between w-full pb-2 space-x-2">
+              <div class="space-y-1">
+                <h3 class="text-lg font-semibold leading sm:pr-8"><%- product.nombre %></h3>
+                <p class="text-sm dark:text-gray-400"><%- product.descripcion %></p>
+                <p class="text-sm dark:text-gray-400"><%- product.tipo %></p>
+              </div>
+              <div class="text-right">
+                <p class="text-lg font-semibold">$<%- product.precio %></p>
+              </div>
+            </div>
+            <div class="flex text-sm divide-x">
+                <a href="/carritodelete/<%=product.id%>" class="flex items-center px-2 py-1 pl-0 space-x-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-4 h-4 fill-current">
+                      <path d="M96,472a23.82,23.82,0,0,0,23.579,24H392.421A23.82,23.82,0,0,0,416,472V152H96Zm32-288H384V464H128Z"></path>
+                      <rect width="32" height="200" x="168" y="216"></rect>
+                      <rect width="32" height="200" x="240" y="216"></rect>
+                      <rect width="32" height="200" x="312" y="216"></rect>
+                      <path d="M328,88V40c0-13.458-9.488-24-21.6-24H205.6C193.488,16,184,26.542,184,40V88H64v32H448V88ZM216,48h80V88H216Z"></path>
+                    </svg>
+                    <span>Eliminar del carrito</span>
+                  </a>
+            </div>
+          </div>
+        </div>
+      </li>
+      <% totalPrice += product.precio; %>
+      <% }); %>
+    </ul>
+    <div class="space-y-1 text-right">
+      <p>Total:
+        <span class="font-semibold">$<%- totalPrice %></span>
+      </p>
+    </div>
+    <div class="flex justify-end space-x-4">
+      <button type="button" class="px-6 py-2 border rounded-md dark:border-violet-400">Continuar
+        <span class="sr-only sm:not-sr-only">comprando</span>
+      </button>
+      
+      <div id="wallet_container"></div>
+      
+      
+      <script>
+        const mp = new MercadoPago('TEST-37e728de-bc2b-4f4f-9ed4-256f8d1a27bf');
+        const bricksBuilder = mp.bricks();
+        mp.bricks().create("wallet", "wallet_container", {
+        initialization: {
+            preferenceId: "<PREFERENCE_ID>",
+        },
+        });
+
+      </script>
+
+    </div>
+  </div>
+</body>
