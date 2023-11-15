@@ -4,7 +4,8 @@ const morgan = require('morgan');
 const mysql = require('mysql');
 const myConnection = require('express-myconnection');
 const mercadopago = require('mercadopago')
-
+const cookieParser = require('cookie-parser');
+require('dotenv').config();
 
 const client = new mercadopago.MercadoPagoConfig({ accessToken: 'TEST-93082596633294-110902-a71c669d973280fbaa9058c064f9966b-437294316' });
 
@@ -23,6 +24,7 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 //middlewares
+app.use(cookieParser());
 app.use(morgan('dev'));
 app.use(myConnection(mysql, {
     host: 'localhost',

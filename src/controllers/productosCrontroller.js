@@ -1,6 +1,7 @@
 const controller = {};
-
+const jwt = require('jsonwebtoken');
 controller.list = (req, res) =>{
+    console.log(jwt.verify(req.cookies.token.token, process.env.API_KEY));
     req.getConnection((err, conn) => {
         conn.query('SELECT * FROM productos', (err, productos) => {
             if(err){
@@ -74,9 +75,6 @@ controller.listInicio = (req, res) => {
 
 controller.userLogin = (req, res) => {
     res.render('userLogin');
-};
-controller.userReg = (req, res) => {
-    res.render('userReg');
 };
 
 module.exports = controller;
