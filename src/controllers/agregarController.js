@@ -3,7 +3,6 @@ const agregarController = {};
 
 agregarController.list = (req, res) =>{
     res.render('agregar'); 
-      
 };
 
 agregarController.save = (req, res) => {
@@ -17,7 +16,5 @@ agregarController.save = (req, res) => {
     });
 };
 
- 
-
-  module.exports = agregarController;
+module.exports = agregarController;
   
