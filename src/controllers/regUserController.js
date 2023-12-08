@@ -1,8 +1,7 @@
-
 const regUserController = {};
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-regUserController.userRegpage = (req, res) => {
+regUserController.userRegPage = (req, res) => {
     res.render('userReg');
 };
 

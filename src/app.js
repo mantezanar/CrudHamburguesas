@@ -82,10 +82,10 @@ preference.create({
 
 
 
-//rutas
-
-app.use('/', productosRoutes);
+//rutas / es importante que los estaticos se carguen antes de las rutas
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/', productosRoutes);
+
 //inicio del sv
 app.listen(3000, () => {
     console.log('Server on port 3000');

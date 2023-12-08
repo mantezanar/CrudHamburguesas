@@ -1,17 +1,23 @@
 const controller = {};
 const jwt = require('jsonwebtoken');
 controller.list = (req, res) =>{
-    console.log(jwt.verify(req.cookies.token.token, process.env.API_KEY));
-    req.getConnection((err, conn) => {
-        conn.query('SELECT * FROM productos', (err, productos) => {
-            if(err){
-                res.json(err);
-            }
-            res.render('productos', {
-                data: productos
+    try {
+        console.log(jwt.verify(req.cookies.token.token, process.env.API_KEY));
+        req.getConnection((err, conn) => {
+            conn.query('SELECT * FROM productos', (err, productos) => {
+                if(err){
+                    res.json(err);
+                }
+                res.render('productos', {
+                    data: productos
+                });
             });
         });
-    });
+    }
+    catch (err) {
+        res.redirect('/iniciosesion')
+    }
+    
 };
 
 controller.save = (req, res) => {
@@ -73,8 +79,6 @@ controller.listInicio = (req, res) => {
     });
 };
 
-controller.userLogin = (req, res) => {
-    res.render('userLogin');
-};
+
 
 module.exports = controller;
