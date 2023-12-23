@@ -1,7 +1,7 @@
 <nav class="bg-gray-800 p-4">
   <div class="container mx-auto flex justify-between items-center">
       <a href="/" class="text-white text-2xl font-semibold">La hamburguesería</a>
-      <div class="space-x-4">
+      <div class="flex space-x-4"> <!-- Utiliza la clase "flex" aquí -->
           <a href="/" class="text-white hover:text-gray-300">Inicio</a>
 
           <% if (!userToken) { %>
@@ -11,7 +11,7 @@
           <% } else { %>
               <!-- Mostrar formulario para borrar el cookie si hay un token -->
               <form action="/borrarcookie" method="post">
-                <button type="submit" class="text-white hover:text-gray-300">Cerrar Sesión</button>
+                  <button type="submit" class="text-white hover:text-gray-300">Cerrar Sesión</button>
               </form>
           <% } %>
 
