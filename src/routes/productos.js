@@ -16,6 +16,7 @@ router.get('/iniciosesion', logUserController.userLoginPage);
 
 router.get('/registro', regUserController.userRegPage);
 router.post('/registrar', regUserController.userReg);
+router.post('/borrarcookie', regUserController.borrarCookie);
 
 router.get('/carrito', carritoController.list);
 router.get('/carritodelete/:id', carritoController.delete);
