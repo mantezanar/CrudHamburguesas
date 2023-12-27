@@ -52,6 +52,11 @@ regUserController.userReg = async (req, res) => {
     }
 };
 
+regUserController.borrarCookie = (req, res) => {
+    console.log("borrando cookie");
+    res.clearCookie('token');
+    res.redirect('/');
+};
 
 
 module.exports = regUserController;

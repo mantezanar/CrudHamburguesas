@@ -34,7 +34,10 @@ app.use(myConnection(mysql, {
 }, 'single'));
 
 app.use(express.urlencoded({extended: false}))
-
+app.use((req, res, next) => {
+    res.locals.userToken = req.cookies.token;
+    next();
+});
 const preference = new mercadopago.Preference(client);
 
 preference.create({
