@@ -10,7 +10,7 @@ controller.userLoginTest = async (req, res) => {
     try {
         const { email, password: contrasenia } = req.body;
         req.getConnection((err, conn) => {
-            const query = 'SELECT contrasenia, cliente_id FROM cliente WHERE correo = ?';
+            const query = 'SELECT contrasenia, cliente_id, tipo_usuario FROM cliente WHERE correo = ?';
             conn.query(query, [email], async (err, rows) => {
                 if (err) {
                     console.error(err);
@@ -20,14 +20,22 @@ controller.userLoginTest = async (req, res) => {
 
                 if (rows.length > 0) {
                     const storedHash = rows[0].contrasenia;
+                    const tipoUsuario = rows[0].tipo_usuario;
 
                     try {
                         const result = await bcrypt.compare(contrasenia, storedHash);
 
                         if (result) {
                             console.log("Contraseña correcta");
-                            const token = jwt.sign({ cliente_id:rows[0].cliente_id, rol: 'cliente', email }, process.env.API_KEY, { algorithm: 'HS256' });
-                            res.cookie('token', 'j:' + JSON.stringify({ token : token }));
+
+                            const tokenData = {
+                                id: rows[0].cliente_id,
+                                rol: (tipoUsuario === 'cliente') ? 'cliente' : 'admin',
+                                email
+                            };
+
+                            const token = jwt.sign(tokenData, process.env.API_KEY, { algorithm: 'HS256' });
+                            res.cookie('token', 'j:' + JSON.stringify({ token }));
                             res.redirect('inicio');
                         } else {
                             console.log("Contraseña incorrecta");
@@ -45,5 +53,6 @@ controller.userLoginTest = async (req, res) => {
         return error;
     }
 };
+
 
 module.exports = controller;
